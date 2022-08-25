@@ -126,6 +126,20 @@ const Home: NextPage = () => {
               </div>
             </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <section
               aria-labelledby="collection-heading"
               className="relative -mt-96 sm:mt-0"
@@ -172,6 +186,29 @@ const Home: NextPage = () => {
               </div>
             </section>
           </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           <section aria-labelledby="trending-heading">
             <div className="mx-auto max-w-7xl py-24 px-4 sm:px-6 sm:py-32 lg:px-8 lg:pt-32">
