@@ -69,6 +69,7 @@ const perks = [
 ]
 
 const Home: NextPage = () => {
+  // const cart = useAppSelector((state) => state.cart.items);
   return (
     <div className="">
       <Layout>

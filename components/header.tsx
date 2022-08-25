@@ -251,7 +251,6 @@ function Header() {
                         </Popover>
                       ))}
 
-
                     </div>
                   </Popover.Group>
                 </div>

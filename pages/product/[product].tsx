@@ -2,10 +2,14 @@ import { StarIcon } from '@heroicons/react/solid'
 import Layout from 'components/layout'
 import { classNames } from 'lib'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { addToCart } from 'redux/cart'
+import { CartItem } from 'types'
 
 const product = {
+  id: 1,
   name: 'Basic Tee 6-Pack',
-  price: '$192',
+  price: 192,
   href: '#',
   images: [
     {
@@ -92,6 +96,7 @@ const reviews = {
 }
 
 export default function ProductPage() {
+  const dispatch = useDispatch()
   const [open, setOpen] = useState(false)
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [selectedSize, setSelectedSize] = useState(product.sizes[2])
@@ -169,12 +174,15 @@ export default function ProductPage() {
             </div>
 
             <form className="mt-10">
-              
+
 
               <button
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
+                onClick={() => dispatch(addToCart({
+                  id: product.id, name: product.name, href: product.href,
+                  color: product.colors[0].name, price: product.price, imageSrc: product.images[0].src, quantity: 1
+                } as CartItem))}>
                 Add to bag
               </button>
             </form>

@@ -3,14 +3,14 @@ export interface Product {
   name: string
   href: string
   color: string
-  price: string
-  availableQty: number
+  price: number
+  availableQty?: number
   imageSrc: string
-  imageAlt: string
+  imageAlt?: string
 }
 
 export interface CartItem extends Product {
-  quantity: number
+  quantity: number;
 }
 
 export type Category = {
@@ -24,8 +24,8 @@ export type AppStateType = {
 }
 
 export type Page = {
-    name: string;
-    href: string;
+  name: string;
+  href: string;
 }
 export type Navigation = {
   categories: Category[]
