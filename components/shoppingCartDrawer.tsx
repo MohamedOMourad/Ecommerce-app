@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { changeItemQuantity, removeItemFromCart } from 'redux/cart'
 import { useAppSelector } from 'redux/hooks'
 import { CartItem, Product } from 'types'
+import { calcSuptotal } from 'utils/Function'
 import Dropdown from './dropdown'
 
 
@@ -26,15 +27,8 @@ export default function ShoppingCartDrawer({ open, setOpen }: props) {
   const cart = useAppSelector((state) => state.cart.items);
   const [subtotal, setSupTotal] = useState(0);
 
-  const calcSuptotal = () => {
-    let total = 0;
-    cart.map(item => {
-      total += item.price * item.quantity
-      setSupTotal(total)
-    })
-  }
   useEffect(() => {
-    calcSuptotal()
+    calcSuptotal(cart, setSupTotal)
   }, [cart])
   return (
     <Transition.Root show={open} as={Fragment}>
