@@ -2,28 +2,25 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { Product } from 'types'
 
-export interface CounterState {
-    product: Product[]
+export interface ProductState {
+    products: Product[]
 }
 
-const initialState: CounterState = {
-    product: []
+const initialState: ProductState = {
+    products: [],
 }
 
 export const productSlice = createSlice({
     name: 'product',
     initialState,
     reducers: {
-        increment: (state) => {
-        },
-        decrement: (state) => {
-        },
-        incrementByAmount: (state, action: PayloadAction<number>) => {
-        },
+        getAllProducts: (state, action: PayloadAction<Product[]>) => {
+            state.products = action.payload
+        }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = productSlice.actions
+export const { getAllProducts } = productSlice.actions
 
 export default productSlice.reducer;

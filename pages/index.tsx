@@ -1,5 +1,9 @@
 import type { NextPage } from 'next'
 import Layout from 'components/layout'
+import { useEffect } from 'react'
+import { getProducts } from 'utils/API'
+import { useAppSelector } from 'redux/hooks'
+import { useDispatch } from 'react-redux'
 
 const collections = [
   {
@@ -25,18 +29,18 @@ const collections = [
       'Person sitting at a wooden desk with paper note organizer, pencil and tablet.',
   },
 ]
-const trendingProducts = [
-  {
-    id: 1,
-    name: 'Leather Long Wallet',
-    color: 'Natural',
-    price: '$75',
-    href: '#',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-04-trending-product-02.jpg',
-    imageAlt: 'Hand stitched, orange leather long wallet.',
-  }
-]
+// const trendingProducts = [
+//   {
+//     id: 1,
+//     name: 'Leather Long Wallet',
+//     color: 'Natural',
+//     price: '$75',
+//     href: '#',
+//     imageSrc:
+//       'https://tailwindui.com/img/ecommerce-images/home-page-04-trending-product-02.jpg',
+//     imageAlt: 'Hand stitched, orange leather long wallet.',
+//   }
+// ]
 const perks = [
   {
     name: 'Free returns',
@@ -69,7 +73,12 @@ const perks = [
 ]
 
 const Home: NextPage = () => {
-  // const cart = useAppSelector((state) => state.cart.items);
+  const dispatch = useDispatch()
+  const products = useAppSelector((state) => state.product.products);
+  console.log(products)
+  useEffect(() => {
+    getProducts(dispatch)
+  },[])
   return (
     <div className="">
       <Layout>
@@ -229,12 +238,12 @@ const Home: NextPage = () => {
               </div>
 
               <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
-                {trendingProducts.map((product) => (
+                {products.map((product) => (
                   <div key={product.id} className="group relative">
                     <div className="h-56 w-full overflow-hidden rounded-md group-hover:opacity-75 lg:h-72 xl:h-80">
                       <img
-                        src={product.imageSrc}
-                        alt={product.imageAlt}
+                        src={product.images![0].src}
+                        alt={product.images![0].alt}
                         className="h-full w-full object-cover object-center"
                       />
                     </div>
@@ -244,9 +253,6 @@ const Home: NextPage = () => {
                         {product.name}
                       </a>
                     </h3>
-                    <p className="mt-1 text-sm text-gray-500">
-                      {product.color}
-                    </p>
                     <p className="mt-1 text-sm font-medium text-gray-900">
                       {product.price}
                     </p>
@@ -308,4 +314,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default Home;

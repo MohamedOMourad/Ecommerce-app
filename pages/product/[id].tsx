@@ -1,60 +1,15 @@
-import { StarIcon } from '@heroicons/react/solid'
-import Layout from 'components/layout'
-import { classNames } from 'lib'
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { addToCart } from 'redux/cart'
-import { CartItem } from 'types'
+import { StarIcon } from '@heroicons/react/solid';
+import Layout from 'components/layout';
+import { classNames } from 'lib';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addToCart } from 'redux/cart';
+import { CartItem, Product } from 'types';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { useAppSelector } from 'redux/hooks';
+import { getProducts } from 'utils/API';
+import axios from 'axios';
 
-const product = {
-  id: 1,
-  name: 'Basic Tee 6-Pack',
-  price: 192,
-  href: '#',
-  images: [
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
-      alt: 'Two each of gray, white, and black shirts laying flat.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
-      alt: 'Model wearing plain black basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
-      alt: 'Model wearing plain gray basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg',
-      alt: 'Model wearing plain white basic tee.',
-    },
-  ],
-  colors: [
-    { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },
-    { name: 'Gray', class: 'bg-gray-200', selectedClass: 'ring-gray-400' },
-    { name: 'Black', class: 'bg-gray-900', selectedClass: 'ring-gray-900' },
-  ],
-  sizes: [
-    { name: 'XXS', inStock: false },
-    { name: 'XS', inStock: true },
-    { name: 'S', inStock: true },
-    { name: 'M', inStock: true },
-    { name: 'L', inStock: true },
-    { name: 'XL', inStock: true },
-    { name: '2XL', inStock: true },
-    { name: '3XL', inStock: true },
-  ],
-  description:
-    'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
-  highlights: [
-    'Hand cut and sewn locally',
-    'Dyed with our proprietary colors',
-    'Pre-washed & pre-shrunk',
-    'Ultra-soft 100% cotton',
-  ],
-  details:
-    'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
-}
 const reviews = {
   href: '#',
   average: 4,
@@ -95,12 +50,8 @@ const reviews = {
   ],
 }
 
-export default function ProductPage() {
-  const dispatch = useDispatch()
-  const [open, setOpen] = useState(false)
-  const [selectedColor, setSelectedColor] = useState(product.colors[0])
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2])
-
+export default function ProductPage({ product }: { product: Product }) {
+  console.log(product)
   return (
     <Layout>
       <main className="pt-10 sm:pt-8 md:pt-0">
@@ -108,31 +59,31 @@ export default function ProductPage() {
         <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
           <div className="aspect-w-3 aspect-h-4 hidden overflow-hidden rounded-lg lg:block">
             <img
-              src={product.images[0].src}
-              alt={product.images[0].alt}
+              src={product.images![0].src}
+              alt={product.images![0].alt}
               className="h-full w-full object-cover object-center"
             />
           </div>
           <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
             <div className="aspect-w-3 aspect-h-2 overflow-hidden rounded-lg">
               <img
-                src={product.images[1].src}
-                alt={product.images[1].alt}
+                src={product.images![1].src}
+                alt={product.images![1].alt}
                 className="h-full w-full object-cover object-center"
               />
             </div>
             <div className="aspect-w-3 aspect-h-2 overflow-hidden rounded-lg">
               <img
-                src={product.images[2].src}
-                alt={product.images[2].alt}
+                src={product.images![2].src}
+                alt={product.images![2].alt}
                 className="h-full w-full object-cover object-center"
               />
             </div>
           </div>
           <div className="aspect-w-4 aspect-h-5 sm:overflow-hidden sm:rounded-lg lg:aspect-w-3 lg:aspect-h-4">
             <img
-              src={product.images[3].src}
-              alt={product.images[3].alt}
+              src={product.images![3].src}
+              alt={product.images![3].alt}
               className="h-full w-full object-cover object-center"
             />
           </div>
@@ -179,10 +130,7 @@ export default function ProductPage() {
               <button
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                onClick={() => dispatch(addToCart({
-                  id: product.id, name: product.name, href: product.href,
-                  color: product.colors[0].name, price: product.price, imageSrc: product.images[0].src, quantity: 1
-                } as CartItem))}>
+                onClick={() => "hello world"}>
                 Add to bag
               </button>
             </form>
@@ -203,11 +151,9 @@ export default function ProductPage() {
 
               <div className="mt-4">
                 <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
-                  {product.highlights.map((highlight) => (
-                    <li key={highlight} className="text-gray-400">
-                      <span className="text-gray-600">{highlight}</span>
-                    </li>
-                  ))}
+                  <li className="text-gray-400">
+                    <span className="text-gray-600">{product.highlights}</span>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -288,3 +234,26 @@ export default function ProductPage() {
     </Layout>
   )
 }
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const API = axios.create({ baseURL: 'http://localhost:3000/api/' })
+  const res = await API.get('product');
+  const products: Product[] = await res.data;
+  return {
+    paths: res.data.map((product: Product) => {
+      return { params: { id: product.id } };
+    }),
+    fallback: true,
+  };
+};
+
+
+
+
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const API = axios.create({ baseURL: 'http://localhost:3000/api/' })
+  const res = await API.get(`product/${params?.id}`);
+  const product: Product = await res.data;
+  return { props: { product: res.data } }
+};

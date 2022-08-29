@@ -9,7 +9,7 @@ export interface CounterState {
 const initialState: CounterState = {
     items: [
         {
-            id: 1,
+            id: "1",
             name: 'Throwback Hip Bag',
             href: '#',
             color: 'Salmon',
@@ -22,7 +22,7 @@ const initialState: CounterState = {
                 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
         },
         {
-            id: 2,
+            id: "2",
             name: 'Medium Stuff Satchel',
             href: '#',
             color: 'Blue',
@@ -48,7 +48,7 @@ export const cartSlice = createSlice({
         },
         changeItemQuantity: (state, action: PayloadAction<{ val: number, id: number }>) => {
             const newData = state.items.map(item => {
-                if (item.id === action.payload.id) {
+                if (item.id === action.payload.id.toString()) {
                     return { ...item, quantity: action.payload.val }
                 }
                 else {
@@ -58,7 +58,7 @@ export const cartSlice = createSlice({
             state.items = newData
         },
         removeItemFromCart: (state, action: PayloadAction<number>) => {
-            const newData = state.items.filter(item => item.id !== action.payload)
+            const newData = state.items.filter(item => item.id !== action.payload.toString())
             state.items = newData
         },
     },
