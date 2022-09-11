@@ -1,3 +1,7 @@
+export interface PropsType{
+  products?:Product[]
+}
+
 export interface Product {
   id: string
   name: string
@@ -12,12 +16,22 @@ export interface Product {
   images?: Image[]
 }
 
-export interface PropsType{
-  products?:Product[]
-}
 
 export interface CartItem extends Product {
   quantity: number;
+}
+
+export type Order = {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  country: string
+  city: string
+  address: string
+  apartment: string
+  postalCode: string
+  cartItems: CartItem[]
 }
 
 export type Category = {
@@ -29,37 +43,12 @@ export type Page = {
   name: string
   href: string
 }
+
 export type Navigation = {
   categories: Category[]
   pages: Page[]
 }
 
-//make each type alone and export
-//create google sheets response type
-
-export type AppStateType = {
-  products: Products[]
-  categories: Categories[]
-  cart: Cart[]
-  order: Order
-}
-
-export type Products = {
-  id: string
-  name: string
-  slug: string
-  imageAlt: string
-  categoryId: string
-  trending: string
-  featured: string
-}
-export interface Cart extends Products {
-  orderId: any
-  images: Images[]
-  variants: ProductVariants[]
-  app: any
-  quantity: number
-}
 export type Dropdown = {
   value: string
   id: string
@@ -90,18 +79,6 @@ export type Images = {
   imageAlt: string
 }
 
-export type Order = {
-  firstName: string
-  lastName: string
-  email: string
-  phone: string
-  country: string
-  city: string
-  address: string
-  apartment: string
-  postalCode: string
-  items: CartItem[]
-}
 export type GoogleSheet = {
   Product: Product[]
   Categories: Categories[]

@@ -46,7 +46,7 @@ export default function Checkout() {
       address: '',
       floor:'',
       apartment: '',
-      items: cart
+      cartItems: cart
     },
     onSubmit: async (values) => {
       await addOrder(values)
@@ -181,7 +181,7 @@ export default function Checkout() {
 
                     <div className="sm:col-span-2">
                       <label
-                        htmlFor="apartment"
+                        htmlFor="floor"
                         className="block text-sm font-medium text-gray-700"
                       >
                         Apartment, suite, etc.
@@ -189,11 +189,11 @@ export default function Checkout() {
                       <div className="mt-1">
                         <input
                           type="text"
-                          name="apartment"
-                          id="apartment"
+                          name="floor"
+                          id="floor"
                           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           onChange={formik.handleChange}
-                          value={formik.values.apartment}
+                          value={formik.values.floor}
                         />
                       </div>
                     </div>
