@@ -1,14 +1,13 @@
 import { StarIcon } from '@heroicons/react/solid';
 import Layout from 'components/layout';
 import { classNames } from 'lib';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addToCart } from 'redux/cart';
-import { CartItem, Product } from 'types';
+import { Product } from 'types';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { useAppSelector } from 'redux/hooks';
-import { getProducts } from 'utils/API';
 import axios from 'axios';
+import Dropdown from 'components/dropdown';
 
 const reviews = {
   href: '#',
@@ -51,7 +50,8 @@ const reviews = {
 }
 
 export default function ProductPage({ product }: { product: Product }) {
-  console.log(product)
+  const [quantity, setQuantity] = useState(1)
+  const dispatch = useDispatch()
   return (
     <Layout>
       <main className="pt-10 sm:pt-8 md:pt-0">
@@ -124,16 +124,24 @@ export default function ProductPage({ product }: { product: Product }) {
               </div>
             </div>
 
-            <form className="mt-10">
-
-
+            <div className="mt-10">
+              <p>Quantity</p>
+              <Dropdown
+                quantity={1}
+                onChange={(val: number) => {
+                  setQuantity(val)
+                }}
+                values={Array.from(
+                  Array(+product.availableQty!),
+                  (_, i) => i + 1
+                )}
+              />
               <button
-                type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                onClick={() => "hello world"}>
+                onClick={() => dispatch(addToCart({ ...product, quantity: quantity }))}>
                 Add to bag
               </button>
-            </form>
+            </div>
           </div>
 
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pt-6 lg:pb-16 lg:pr-8">
@@ -246,9 +254,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: true,
   };
 };
-
-
-
 
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {

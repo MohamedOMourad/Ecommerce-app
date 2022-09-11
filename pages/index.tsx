@@ -1,9 +1,10 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
 import Layout from 'components/layout'
 import { useEffect } from 'react'
 import { getProducts } from 'utils/API'
-import { useAppSelector } from 'redux/hooks'
 import { useDispatch } from 'react-redux'
+import axios from 'axios'
+import { PropsType } from 'types'
 
 const collections = [
   {
@@ -72,13 +73,12 @@ const perks = [
   },
 ]
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ products }:  PropsType ) => {
   const dispatch = useDispatch()
-  const products = useAppSelector((state) => state.product.products);
-  console.log(products)
+  // const products = useAppSelector((state) => state.product.products);
   useEffect(() => {
     getProducts(dispatch)
-  },[])
+  }, [])
   return (
     <div className="">
       <Layout>
@@ -238,7 +238,7 @@ const Home: NextPage = () => {
               </div>
 
               <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
-                {products.map((product) => (
+                {products?.map((product) => (
                   <div key={product.id} className="group relative">
                     <div className="h-56 w-full overflow-hidden rounded-md group-hover:opacity-75 lg:h-72 xl:h-80">
                       <img
@@ -313,5 +313,11 @@ const Home: NextPage = () => {
     </div>
   )
 }
-
 export default Home;
+
+export const getStaticProps: GetStaticProps = async () => {
+  const API = axios.create({ baseURL: 'http://localhost:3000/api/' })
+  const res = await API.get(`product`);
+  // const product: Product = await res.data;
+  return { props: { products: res.data } }
+};

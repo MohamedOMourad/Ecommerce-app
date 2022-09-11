@@ -2,15 +2,18 @@ export interface Product {
   id: string
   name: string
   href: string
-  color: string
-  price: number
-  availableQty?: number
+  price: string
+  availableQty?: string
   src: string
   alt: string
   description: string
   highlights:string
   details:string
   images?: Image[]
+}
+
+export interface PropsType{
+  products?:Product[]
 }
 
 export interface CartItem extends Product {
@@ -88,23 +91,16 @@ export type Images = {
 }
 
 export type Order = {
-  Items: Cart[]
-  address: string
-  apartment: string
-  cardName: string
-  cardNumber: string
-  city: string
-  country: string
-  cvc: string
-  email: string
-  expiration: string
   firstName: string
   lastName: string
-  paymentMethod: string
+  email: string
   phone: string
+  country: string
+  city: string
+  address: string
+  apartment: string
   postalCode: string
-  region: string
-  orderId: string
+  items: CartItem[]
 }
 export type GoogleSheet = {
   Product: Product[]
